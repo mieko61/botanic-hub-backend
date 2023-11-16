@@ -10,6 +10,6 @@ router
   .route("/:id")
   .get(favoritesController.findOne)
   .delete(favoritesController.remove)
-  .insert(favoritesController.add);
+  .post(favoritesController.add);
 
 module.exports = router;

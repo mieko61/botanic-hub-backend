@@ -7,7 +7,7 @@ exports.up = function (knex) {
     table.increments("id").primary();
     table.string("image");
     table.string("name").notNullable();
-    table.string("description").notNullable();
+    table.text("description").notNullable();
   });
 };
 
