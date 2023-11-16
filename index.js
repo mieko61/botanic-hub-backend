@@ -17,6 +17,10 @@ app.get("/", (req, res) => {
   res.send("Welcome to Plants");
 });
 
+app.use("/login", loginRoute);
+app.use("/favorites", favoritesRoute);
+app.use("/results", resultsRoute);
+
 app.listen(5050, function () {
   console.log("running on port 5050");
 });
