@@ -3,9 +3,9 @@
  * @returns { Promise<void> }
  */
 exports.up = function (knex) {
-  return knex.schema.createTable("use", (table) => {
+  return knex.schema.createTable("healthUse", (table) => {
     table.increments("id").primary();
-    table.string("use").notNullable();
+    table.string("healthUse").notNullable();
   });
 };
 

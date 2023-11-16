@@ -5,8 +5,16 @@
 exports.up = function (knex) {
   return knex.schema.createTable("plantUse", (table) => {
     table.increments("id").primary();
-    table.integer("plant_id").references("user.id").onDelete("RESTRICT");
-    table.integer("use_id").references("use.id").onDelete("RESTRICT");
+    table
+      .integer("plant_id")
+      .unsigned()
+      .references("user.id")
+      .onDelete("RESTRICT");
+    table
+      .integer("healthUse_id")
+      .unsigned()
+      .references("healthUse.id")
+      .onDelete("RESTRICT");
   });
 };
 
