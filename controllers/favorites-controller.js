@@ -1,27 +1,27 @@
 const knex = require("knex")(require("../knexfile"));
 
 const index = async (req, res) => {
-  const requestedUser = req.params.id;
+  const userId = req.params.userId;
   try {
-    const data = await knex
-      .select("*")
-      .from("favorite")
-      .where("user_id", requestedUser);
+    const favoritePlants = await knex("plant")
+      .join("favorite", "plant.id", "favorite.plant_id")
+      .where("favorite.user_id", userId);
 
-    return res.status(200).json(data);
+    return res.status(200).json(favoritePlants);
   } catch (error) {
     return res.status(500).send(`Unable to retrieve results: ${error}`);
   }
 };
 
 const findOne = async (req, res) => {
-  const requestedPlant = req.params.id;
+  const plantId = req.params.plantId;
+  const userId = req.params.userId;
 
   try {
     const plantFound = await knex
-      .select("plant.*")
-      .join("favoritePlant", "plantId", "favoritePlant.plant_id")
-      .where("favoritePlant.plant_id", requestedPlant);
+      .select("plant")
+      .join("favorite", plantId, "favorite.plant_id")
+      .where("favoritePlant.user_id", userId);
 
     if (plantFound.length === 0) {
       return res.status(404).json({
@@ -39,20 +39,22 @@ const findOne = async (req, res) => {
 };
 
 const remove = async (req, res) => {
-  const selectedPlantId = req.params.id;
+  // const userId = req.params.userId;
+  const plantId = req.params.plantId;
 
   try {
     const plantDeleted = await knex("favorite")
-      .where("favorite.id", selectedPlantId)
+      // .join("user", "favorite.user_id", userId)
+      .where("favorite.plant_id", plantId)
       .delete();
 
     if (plantDeleted === 0) {
       return res.status(404).json({
-        message: `Plant with ID ${selectedPlantId} not found`,
+        message: `Plant with ID ${plantId} not found`,
       });
     }
     return res.status(204).json({
-      message: `Successfully deleted plant with ID ${selectedplantId}`,
+      message: `Successfully deleted plant with ID ${plantId}`,
     });
   } catch (error) {
     res.status(500).json({
@@ -62,7 +64,7 @@ const remove = async (req, res) => {
 };
 
 const add = async (req, res) => {
-  const selectedPlantId = req.params.id;
+  const plantId = req.params.plantId;
 
   try {
     const plantAdded = await knex("favoritePlant")

@@ -1,39 +1,29 @@
 const knex = require("knex")(require("../knexfile"));
 
 const index = async (req, res) => {
-  const plantUseId = req.params.id;
-
+  const healthUseId = req.params.healthUseId;
   try {
-    const dataCheck = await knex("plantUse").where("use_id", plantUseId);
-
-    if (dataCheck.length === 0) {
-      return res.status(404).send(`Unable to retrieve results: ${err}`);
-    }
-
-    const data = await knex("plant")
-      .join("plantUse", "plantId", "plantUse.plant_id")
-      .where("plantUse.use_id")
-      .select("*")
-      .from("plant");
-
-    return res.status(200).json(data);
+    const plantsFound = await knex("plant")
+      .join("plantUse", "plant.id", "plantUse.plant_id")
+      .where("plantUse.healthUse_id", healthUseId);
+    return res.status(200).json(plantsFound);
   } catch (error) {
     return res.status(500).send(`Unable to retrieve results: ${error}`);
   }
 };
 
 const findOne = async (req, res) => {
-  const requestedPlant = req.params.id;
+  const healthUseId = req.query.healthUseId;
+  const plantId = req.query.plantId;
 
   try {
-    const plantFound = await knex
-      .select("plant.*")
-      .join("plantUse", "plantId", "plantUse.plant_id")
-      .where("plantUse.use_id", requestedPlant);
+    const plantFound = await knex("plant")
+      .join("plantUse", plantId, "plantUse.plant_id")
+      .where("plantUse.healthUse_id", healthUseId);
 
     if (plantFound.length === 0) {
       return res.status(404).json({
-        message: `Plant with ID ${requestedPlant} not found`,
+        message: `Plant with ID ${plantId} not found`,
       });
     }
 
@@ -41,7 +31,7 @@ const findOne = async (req, res) => {
     res.status(200).json(selectedPlant);
   } catch (error) {
     res.status(500).json({
-      message: `Unable to retrieve plant with ID ${requestedPlant}`,
+      message: `Unable to retrieve plant with ID ${plantId}`,
     });
   }
 };
