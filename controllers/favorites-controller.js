@@ -18,14 +18,14 @@ const findOne = async (req, res) => {
   const userId = req.params.userId;
 
   try {
-    const plantFound = await knex
-      .select("plant")
-      .join("favorite", plantId, "favorite.plant_id")
-      .where("favoritePlant.user_id", userId);
+    const plantFound = await knex("plant")
+      .join("favorite", "plant.id", "favorite.plant_id")
+      .where("favorite.user_id", userId)
+      .andWhere("plant.id", plantId);
 
     if (plantFound.length === 0) {
       return res.status(404).json({
-        message: `Plant with ID ${requestedPlant} not found`,
+        message: `Plant with ID ${plantId} not found`,
       });
     }
 
@@ -33,19 +33,21 @@ const findOne = async (req, res) => {
     res.status(200).json(selectedPlant);
   } catch (error) {
     res.status(500).json({
-      message: `Unable to retrieve plant with ID ${requestedPlant}`,
+      message: `Unable to retrieve plant with ID ${plantId}`,
+      error: error,
     });
   }
 };
 
 const remove = async (req, res) => {
-  // const userId = req.params.userId;
+  const userId = req.params.userId;
   const plantId = req.params.plantId;
 
   try {
     const plantDeleted = await knex("favorite")
-      // .join("user", "favorite.user_id", userId)
-      .where("favorite.plant_id", plantId)
+      .join("user", "favorite.user_id", "user.id")
+      .where("user.id", userId)
+      .andWhere("favorite.plant_id", plantId)
       .delete();
 
     if (plantDeleted === 0) {
@@ -53,7 +55,7 @@ const remove = async (req, res) => {
         message: `Plant with ID ${plantId} not found`,
       });
     }
-    return res.status(204).json({
+    return res.status(200).json({
       message: `Successfully deleted plant with ID ${plantId}`,
     });
   } catch (error) {
@@ -64,20 +66,24 @@ const remove = async (req, res) => {
 };
 
 const add = async (req, res) => {
+  const userId = req.params.userId;
   const plantId = req.params.plantId;
 
   try {
-    const plantAdded = await knex("favoritePlant")
-      .insert(selectedPlantId)
-      .join("plant", selectedPlantId, "plant.id");
+    const plantAdded = await knex("favorite")
+      .insert({ plant_id: plantId, user_id: userId })
+      .join("plant", "favorite.plant_id", "plant.id")
+      .where(userId, "favorite.user_id")
+      .onConflict(["favorite.plant_id", plantId])
+      .ignore();
 
     res.status(201).json({
-      message: `Plant with ID ${selectedPlantId} was successfully added`,
+      message: `Plant ${plantId} was successfully added`,
     });
-    // json(plantAdded);
   } catch (error) {
     res.status(500).json({
       message: `Unable to add plant ${error}`,
+      error: error,
     });
   }
 };

@@ -10,10 +10,11 @@ router.route("/userId/:userId").get(favoritesController.index);
 router
   .route("/userId/:userId/plantId/:plantId")
   .get(favoritesController.findOne)
-  .post(favoritesController.add);
-
-router
-  .route("/userId/:userId/remove/:plantId")
+  .post(favoritesController.add)
   .delete(favoritesController.remove);
+
+// router
+//   .route("/userId/:userId/plantId/:plantId/remove")
+//   .delete(favoritesController.remove);
 
 module.exports = router;

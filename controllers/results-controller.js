@@ -13,13 +13,14 @@ const index = async (req, res) => {
 };
 
 const findOne = async (req, res) => {
-  const healthUseId = req.query.healthUseId;
-  const plantId = req.query.plantId;
+  const healthUseId = req.params.healthUseId;
+  const plantId = req.params.plantId;
 
   try {
     const plantFound = await knex("plant")
-      .join("plantUse", plantId, "plantUse.plant_id")
-      .where("plantUse.healthUse_id", healthUseId);
+      .join("plantUse", "plant_id", "plantUse.plant_id")
+      .where("plantUse.healthUse_id", healthUseId)
+      .andWhere("plant.id", plantId);
 
     if (plantFound.length === 0) {
       return res.status(404).json({
@@ -32,6 +33,7 @@ const findOne = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       message: `Unable to retrieve plant with ID ${plantId}`,
+      error: error,
     });
   }
 };
