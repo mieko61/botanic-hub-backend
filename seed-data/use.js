@@ -2,17 +2,17 @@ module.exports = [
   {
     id: 1,
     healthUse: "Weight loss",
-    category_id: null,
+    category_id: 8,
   },
   {
     id: 2,
     healthUse: "Digestion",
-    category_id: null,
+    category_id: 1,
   },
   {
     id: 3,
     healthUse: "Inflammation",
-    category_id: null,
+    category_id: 6,
   },
   {
     id: 4,
