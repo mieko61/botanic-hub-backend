@@ -3,6 +3,7 @@ const cors = require("cors");
 const app = express();
 const favoritesRoute = require("./routes/favorites-routes");
 const categoriesRoute = require("./routes/categories-route");
+const healthUseRoute = require("./routes/healthUse-route");
 const resultsRoute = require("./routes/results-routes");
 const loginRoute = require("./routes/login-routes");
 
@@ -24,6 +25,7 @@ app.get("/", (req, res) => {
 // app.use("/login", loginRoute);
 app.use("/favorites", favoritesRoute);
 app.use("/categories", categoriesRoute);
+app.use("/healthUse", healthUseRoute);
 app.use("/results", resultsRoute);
 
 app.listen(5050, function () {

@@ -5,16 +5,12 @@ apiBody = process.env.API_URL;
 
 const favoritesController = require("../controllers/favorites-controller");
 
-router.route("/userId/:userId").get(favoritesController.index);
-
 router
-  .route("/userId/:userId/plantId/:plantId")
-  .get(favoritesController.findOne)
+  .route("/")
+  .get(favoritesController.index)
   .post(favoritesController.add)
   .delete(favoritesController.remove);
 
-// router
-//   .route("/userId/:userId/plantId/:plantId/remove")
-//   .delete(favoritesController.remove);
+router.route("/plant").get(favoritesController.findOne);
 
 module.exports = router;

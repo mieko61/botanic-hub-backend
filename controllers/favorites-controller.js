@@ -1,7 +1,7 @@
 const knex = require("knex")(require("../knexfile"));
 
 const index = async (req, res) => {
-  const userId = req.params.userId;
+  const userId = req.query.user;
   try {
     const favoritePlants = await knex("plant")
       .join("favorite", "plant.id", "favorite.plant_id")
@@ -14,8 +14,8 @@ const index = async (req, res) => {
 };
 
 const findOne = async (req, res) => {
-  const plantId = req.params.plantId;
-  const userId = req.params.userId;
+  const plantId = req.query.plant;
+  const userId = req.query.user;
 
   try {
     const plantFound = await knex("plant")
@@ -40,8 +40,8 @@ const findOne = async (req, res) => {
 };
 
 const remove = async (req, res) => {
-  const userId = req.params.userId;
-  const plantId = req.params.plantId;
+  const userId = req.query.user;
+  const plantId = req.query.plant;
 
   try {
     const plantDeleted = await knex("favorite")
@@ -66,8 +66,8 @@ const remove = async (req, res) => {
 };
 
 const add = async (req, res) => {
-  const userId = req.params.userId;
-  const plantId = req.params.plantId;
+  const userId = req.query.user;
+  const plantId = req.query.plant;
 
   try {
     const plantAdded = await knex("favorite")

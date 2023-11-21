@@ -8,7 +8,7 @@ exports.up = function (knex) {
     table
       .integer("plant_id")
       .unsigned()
-      .references("user.id")
+      .references("plant.id")
       .onDelete("RESTRICT");
     table
       .integer("healthUse_id")
