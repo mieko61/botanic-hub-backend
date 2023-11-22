@@ -3,8 +3,8 @@ const knex = require("knex")(require("../knexfile"));
 const index = async (req, res) => {
   const healthUseId = req.query.healthUse;
   try {
-    const plantsFound = await knex("plant")
-      .join("plantUse", "plant.id", "plantUse.plant_id")
+    const plantsFound = await knex("plantUse")
+      .join("plant", "plant.id", "plantUse.plant_id")
       .where("plantUse.healthUse_id", healthUseId);
     return res.status(200).json(plantsFound);
   } catch (error) {
@@ -15,15 +15,14 @@ const index = async (req, res) => {
 const findOne = async (req, res) => {
   const healthUseId = req.query.healthUse;
   const plantId = req.query.plant;
-
   try {
-    const plantFound = await knex("plant")
-      .join("plantUse", "plant.id", "plantUse.plant_id")
+    const plantFound = await knex("plantUse")
+      .join("plant", "plant.id", "plantUse.plant_id")
       .where("plantUse.healthUse_id", healthUseId)
       .andWhere("plant.id", plantId)
       .first();
 
-    if (plantFound.length === 0) {
+    if (!plantFound) {
       return res.status(404).json({
         message: `Plant with ID ${plantId} not found`,
       });
