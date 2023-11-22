@@ -4,17 +4,18 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 router.post("/register", async (req, res) => {
-  const { name, email } = req.body;
+  const { name, email, password } = req.body;
 
-  if (!name || !email) {
+  if (!name || !email || !password) {
     return res.status(400).send("Please enter the required fields");
   }
 
-  const hashedEmail = bcrypt.hashSync(email);
+  const hashedPassword = bcrypt.hashSync(password);
 
   const newUser = {
     name,
-    email: hashedEmail,
+    email,
+    password: hashedPassword,
   };
 
   try {
@@ -26,9 +27,9 @@ router.post("/register", async (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
-  const { email } = req.body;
+  const { email, password } = req.body;
 
-  if (!email) {
+  if (!email || !password) {
     return res.status(404).send("Please enter the required fields");
   }
 
@@ -37,10 +38,10 @@ router.post("/login", async (req, res) => {
     return res.status(400).send("Invalid email");
   }
 
-  const isEmailCorrect = bcrypt.compareSync(email, user.email);
+  const isPasswordCorrect = bcrypt.compareSync(password, user.password);
 
-  if (!isEmailCorrect) {
-    return res.status(400).send("Invalid email");
+  if (!isPasswordCorrect) {
+    return res.status(400).send("Invalid password");
   }
 
   const token = jwt.sign(

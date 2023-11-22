@@ -6,6 +6,7 @@ const categoriesRoutes = require("./routes/categories-routes");
 const healthUseRoutes = require("./routes/healthUse-routes");
 const resultsRoutes = require("./routes/results-routes");
 const authRoutes = require("./routes/auth-routes");
+const profileRoutes = require("./routes/profile-routes");
 
 const origin = process.env.CORS_ORIGIN;
 
@@ -23,6 +24,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/auth", authRoutes);
+app.use("profile", profileRoutes);
 app.use("/favorites", favoritesRoutes);
 app.use("/categories", categoriesRoutes);
 app.use("/healthUse", healthUseRoutes);
