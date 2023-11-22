@@ -529,4 +529,39 @@ module.exports = [
     plant_id: 36,
     healthUse_id: 14,
   },
+  {
+    id: 107,
+    plant_id: 12,
+    healthUse_id: 15,
+  },
+  {
+    id: 108,
+    plant_id: 19,
+    healthUse_id: 15,
+  },
+  {
+    id: 109,
+    plant_id: 27,
+    healthUse_id: 15,
+  },
+  {
+    id: 110,
+    plant_id: 29,
+    healthUse_id: 15,
+  },
+  {
+    id: 111,
+    plant_id: 30,
+    healthUse_id: 15,
+  },
+  {
+    id: 112,
+    plant_id: 32,
+    healthUse_id: 15,
+  },
+  {
+    id: 113,
+    plant_id: 37,
+    healthUse_id: 15,
+  },
 ];

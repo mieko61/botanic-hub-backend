@@ -69,4 +69,9 @@ module.exports = [
     healthUse: "Headaches",
     category_id: 7,
   },
+  {
+    id: 15,
+    healthUse: "Immunity",
+    category_id: 5,
+  },
 ];
