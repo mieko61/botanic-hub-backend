@@ -24,7 +24,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/auth", authRoutes);
-app.use("profile", profileRoutes);
+app.use("/profile", profileRoutes);
 app.use("/favorites", favoritesRoutes);
 app.use("/categories", categoriesRoutes);
 app.use("/healthUse", healthUseRoutes);
