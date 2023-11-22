@@ -26,31 +26,30 @@ router.post("/register", async (req, res) => {
   }
 });
 
-// router.post("/login", async (req, res) => {
-//   const { email, password } = req.body;
+router.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+  console.log(req.body);
 
-//   if (!email || !password) {
-//     return res.status(404).send("Please enter the required fields");
-//   }
+  if (!email || !password) {
+    return res.status(400).send("Please enter the required fields");
+  }
 
-//   const user = await knex("user").where({ email: email }).first();
-//   if (!user) {
-//     return res.status(400).send("Invalid email");
-//   }
+  const user = await knex("user").where({ email: email }).first();
+  if (!user) {
+    return res.status(400).send("Invalid email");
+  }
 
-//   const isPasswordCorrect = bcrypt.compareSync(password, user.password);
+  const isPasswordCorrect = bcrypt.compareSync(password, user.password);
 
-//   if (!isPasswordCorrect) {
-//     return res.status(400).send("Invalid password");
-//   }
+  if (!isPasswordCorrect) {
+    return res.status(400).send("Invalid password");
+  }
 
-//   const token = jwt.sign(
-//     { id: user.id, email: user.email },
-//     process.env.JWT_KEY,
-//     { exoiresIn: "24hr" }
-//   );
+  const token = jwt.sign({ id: user.id }, process.env.JWT_KEY, {
+    expiresIn: "24hr",
+  });
 
-//   res.send({ token });
-// });
+  res.send({ token });
+});
 
 module.exports = router;
