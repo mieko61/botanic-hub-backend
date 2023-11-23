@@ -14,14 +14,15 @@ const index = async (req, res) => {
 };
 
 const findOne = async (req, res) => {
-  const plantId = req.query.plant;
+  const favoriteId = req.query.favorite;
   const userId = req.query.user;
 
   try {
-    const plantFound = await knex("plant")
-      .join("favorite", "plant.id", "favorite.plant_id")
-      .where("favorite.user_id", userId)
-      .andWhere("plant.id", plantId);
+    const plantFound = await knex("user")
+      .join("favorite", "user.id", "favorite.user_id")
+      .join("plant", "favorite.plant_id", "plant.id")
+      .where("user.id", userId)
+      .andWhere("favorite.id", favoriteId);
 
     if (plantFound.length === 0) {
       return res.status(404).json({
@@ -33,7 +34,7 @@ const findOne = async (req, res) => {
     res.status(200).json(selectedPlant);
   } catch (error) {
     res.status(500).json({
-      message: `Unable to retrieve plant with ID ${plantId}`,
+      message: `Unable to retrieve plant with ID ${favoriteId}`,
       error: error,
     });
   }
