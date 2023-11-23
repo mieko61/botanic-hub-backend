@@ -1,11 +1,14 @@
 const express = require("express");
 const cors = require("cors");
+require("dotenv").config();
 const app = express();
-const favoritesRoute = require("./routes/favorites-routes");
-const categoriesRoute = require("./routes/categories-route");
-const healthUseRoute = require("./routes/healthUse-route");
-const resultsRoute = require("./routes/results-routes");
-const loginRoute = require("./routes/login-routes");
+const favoritesRoutes = require("./routes/favorites-routes");
+const categoriesRoutes = require("./routes/categories-routes");
+const healthUseRoutes = require("./routes/healthUse-routes");
+const resultsRoutes = require("./routes/results-routes");
+const authRoutes = require("./routes/auth-routes");
+const profileRoutes = require("./routes/profile-routes");
+const jwt = require("jsonwebtoken");
 
 const origin = process.env.CORS_ORIGIN;
 
@@ -22,11 +25,12 @@ app.get("/", (req, res) => {
   res.send("Welcome to Plants");
 });
 
-// app.use("/login", loginRoute);
-app.use("/favorites", favoritesRoute);
-app.use("/categories", categoriesRoute);
-app.use("/healthUse", healthUseRoute);
-app.use("/results", resultsRoute);
+app.use("/auth", authRoutes);
+app.use("/profile", profileRoutes);
+app.use("/favorites", favoritesRoutes);
+app.use("/categories", categoriesRoutes);
+app.use("/healthUse", healthUseRoutes);
+app.use("/results", resultsRoutes);
 
 app.listen(5050, function () {
   console.log("running on port 5050");
