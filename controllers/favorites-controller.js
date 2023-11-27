@@ -14,7 +14,7 @@ const index = async (req, res) => {
 };
 
 const findOne = async (req, res) => {
-  const favoriteId = req.query.favorite;
+  const plantId = req.body.plant_id;
   const userId = req.query.user;
 
   try {
@@ -42,8 +42,7 @@ const findOne = async (req, res) => {
 
 const remove = async (req, res) => {
   const userId = req.query.user;
-  const plantId = req.query.plant;
-
+  const plantId = req.body.plant_id;
   try {
     const plantDeleted = await knex("favorite")
       .join("user", "favorite.user_id", "user.id")
