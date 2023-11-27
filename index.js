@@ -8,6 +8,7 @@ const healthUseRoutes = require("./routes/healthUse-routes");
 const resultsRoutes = require("./routes/results-routes");
 const authRoutes = require("./routes/auth-routes");
 const profileRoutes = require("./routes/profile-routes");
+const plantDetailsRoutes = require("./routes/plant-details-routes");
 const jwt = require("jsonwebtoken");
 
 const origin = process.env.CORS_ORIGIN;
@@ -31,6 +32,7 @@ app.use("/favorites", favoritesRoutes);
 app.use("/categories", categoriesRoutes);
 app.use("/healthUse", healthUseRoutes);
 app.use("/results", resultsRoutes);
+app.use("/plantdetails", plantDetailsRoutes);
 
 app.listen(5050, function () {
   console.log("running on port 5050");

@@ -38,5 +38,4 @@ const findOne = async (req, res) => {
 
 module.exports = {
   index,
-  findOne,
 };
