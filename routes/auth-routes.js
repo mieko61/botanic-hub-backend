@@ -50,7 +50,7 @@ router.post("/login", async (req, res) => {
     expiresIn: "24hr",
   });
 
-  res.send({ token });
+  res.send({ token, userId: user.id });
 });
 
 module.exports = router;

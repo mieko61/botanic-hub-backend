@@ -1,7 +1,7 @@
 const knex = require("knex")(require("../knexfile"));
 
 const index = async (req, res) => {
-  const userId = req.query.user;
+  const userId = req.query.userId;
   try {
     const favoritePlants = await knex("plant")
       .join("favorite", "plant.id", "favorite.plant_id")
