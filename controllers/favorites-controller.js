@@ -15,7 +15,7 @@ const index = async (req, res) => {
 
 const findOne = async (req, res) => {
   const plantId = req.query.plant;
-  const userId = req.query.user;
+  const userId = req.query.userId;
 
   try {
     const plantFound = await knex("user")
@@ -41,7 +41,7 @@ const findOne = async (req, res) => {
 };
 
 const remove = async (req, res) => {
-  const userId = req.query.user;
+  const userId = req.query.userId;
   const plantId = req.body.plant_id;
   try {
     const plantDeleted = await knex("favorite")
@@ -66,7 +66,7 @@ const remove = async (req, res) => {
 };
 
 const add = async (req, res) => {
-  const userId = req.query.user;
+  const userId = req.query.userId;
   const plantId = req.body.plant_id;
 
   try {
