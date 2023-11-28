@@ -1,9 +1,11 @@
 const express = require("express");
 const router = express.Router();
-
+const authenticate = require("../middleware/authenticate");
 apiBody = process.env.API_URL;
 
 const favoritesController = require("../controllers/favorites-controller");
+
+router.use("/", authenticate);
 
 router
   .route("/")

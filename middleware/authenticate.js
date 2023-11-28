@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-const authenticate = async (req, res, next) => {
+const authenticate = (req, res, next) => {
   if (!req.headers.authorization) {
     return res.status(401).send("Please login");
   }

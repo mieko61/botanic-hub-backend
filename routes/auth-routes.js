@@ -28,7 +28,7 @@ router.post("/register", async (req, res) => {
 
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
-  console.log(req.body);
+  // console.log(req.body);
 
   if (!email || !password) {
     return res.status(400).send("Please enter the required fields");
@@ -41,7 +41,7 @@ router.post("/login", async (req, res) => {
 
   const isPasswordCorrect = bcrypt.compareSync(password, user.password);
 
-  console.log(password, user.password);
+  // console.log(password, user.password);
   if (!isPasswordCorrect) {
     return res.status(400).send("Invalid password");
   }
