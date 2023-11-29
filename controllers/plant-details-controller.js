@@ -22,9 +22,10 @@ const index = async (req, res) => {
 const plantUses = async (req, res) => {
   const plantId = req.query.plant;
   try {
-    const healthUsesFound = await knex("plantUse")
-      .join("plant", "plantUse.plant_id", "plant_id")
-      .where("plant_id", plantId);
+    const healthUsesFound = await knex("healthUse")
+      .join("plantUse", "plantUse.healthUse_id", "healthUse.id")
+      .join("plant", "plant.id", "healthUse.plant_id")
+      .where("plant.id", plantId);
     return res.status(200).json(healthUsesFound);
   } catch (error) {
     return res.status(500).send(`Unable to retrieve results: ${error}`);
@@ -35,3 +36,15 @@ module.exports = {
   index,
   plantUses,
 };
+
+// const plantUses = async (req, res) => {
+//   const plantId = req.query.plant;
+//   try {
+//     const healthUsesFound = await knex("plantUse")
+//       .join("plant", "plantUse.plant_id", "plant_id")
+//       .where("plant_id", plantId);
+//     return res.status(200).json(healthUsesFound);
+//   } catch (error) {
+//     return res.status(500).send(`Unable to retrieve results: ${error}`);
+//   }
+// };
