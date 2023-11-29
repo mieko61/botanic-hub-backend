@@ -12,34 +12,36 @@ const index = async (req, res) => {
   }
 };
 
-const findOne = async (req, res) => {
-  const plantId = req.query.plant;
-  console.log("here");
+// const findOne = async (req, res) => {
+//   console.log(req.user_id);
 
-  try {
-    const plantFound = await knex("user")
-      .join("favorite", "user.id", "favorite.user_id")
-      .join("plant", "favorite.plant_id", "plant.id")
-      .where("user.id", req.user_id)
-      .andWhere("favorite.id", favoriteId);
+//   const plantId = req.query.plant;
 
-    if (plantFound.length === 0) {
-      return res.status(404).json({
-        message: `Plant with ID ${plantId} not found`,
-      });
-    }
+//   try {
+//     const plantFound = await knex("user")
+//       .join("favorite", "user.id", "favorite.user_id")
+//       .join("plant", "favorite.plant_id", "plant.id")
+//       .where("user.id", req.user_id)
+//       .andWhere("favorite.id", favoriteId);
 
-    const selectedPlant = plantFound[0];
-    res.status(200).json(selectedPlant);
-  } catch (error) {
-    res.status(500).json({
-      message: `Unable to retrieve plant with ID ${favoriteId}`,
-      error: error,
-    });
-  }
-};
+//     if (plantFound.length === 0) {
+//       return res.status(404).json({
+//         message: `Plant with ID ${plantId} not found`,
+//       });
+//     }
+
+//     const selectedPlant = plantFound[0];
+//     res.status(200).json(selectedPlant);
+//   } catch (error) {
+//     res.status(500).json({
+//       message: `Unable to retrieve plant with ID ${favoriteId}`,
+//       error: error,
+//     });
+//   }
+// };
 
 const remove = async (req, res) => {
+  console.log(req.user_id);
   const plantId = req.query.plant_id;
 
   try {
@@ -66,6 +68,7 @@ const remove = async (req, res) => {
 
 const add = async (req, res) => {
   const plantId = req.body.plant_id;
+  console.log(plantId);
   try {
     const plantAdded = await knex("favorite")
       .insert({ plant_id: plantId, user_id: req.user_id })
@@ -87,7 +90,7 @@ const add = async (req, res) => {
 
 module.exports = {
   index,
-  findOne,
+  // findOne,
   remove,
   add,
 };
