@@ -24,7 +24,7 @@ const plantUses = async (req, res) => {
   try {
     const healthUsesFound = await knex("healthUse")
       .join("plantUse", "plantUse.healthUse_id", "healthUse.id")
-      .join("plant", "plant.id", "healthUse.plant_id")
+      .join("plant", "plant.id", "plantUse.plant_id")
       .where("plant.id", plantId);
     return res.status(200).json(healthUsesFound);
   } catch (error) {
