@@ -45,9 +45,9 @@ const remove = async (req, res) => {
   const plantId = req.query.plant_id;
 
   try {
-    const plantDeleted = await knex("user")
-      .join("favorite", "favorite.user_id", "user.id")
-      .where("user.id", req.user_id)
+    const plantDeleted = await knex("favorite")
+      // .join("favorite", "favorite.user_id", "user.id")
+      .where("favorite.user_id", req.user_id)
       .andWhere("favorite.plant_id", plantId)
       .delete();
 
