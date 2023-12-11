@@ -13,6 +13,4 @@ router
   .post(favoritesController.add)
   .delete(favoritesController.remove);
 
-// router.route("/plant").get(favoritesController.findOne);
-
 module.exports = router;

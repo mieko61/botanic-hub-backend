@@ -6,7 +6,6 @@ const index = async (req, res) => {
     const topicsFound = await knex("category")
       .join("healthUse", "healthUse.category_id", "category.id")
       .where("healthUse.category_id", categoryId);
-    // console.log(topicsFound);
     return res.status(200).json(topicsFound);
   } catch (error) {
     return res.status(500).send(`Unable to retrieve results: ${error}`);
