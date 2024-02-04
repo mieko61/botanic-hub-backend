@@ -34,6 +34,6 @@ app.use("/healthUse", healthUseRoutes);
 app.use("/results", resultsRoutes);
 app.use("/plantdetails", plantDetailsRoutes);
 
-app.listen(5050, function () {
+app.listen(process.env.PORT || 5050, function () {
   console.log("running on port 5050");
 });
